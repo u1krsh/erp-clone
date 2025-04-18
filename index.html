@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College App - Utkarsh Singh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #8a1538;
+            color: #333;
+        }
+
+        .navigation-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: white;
+        }
+
+        .back-button {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-button {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .content {
+            background-color: #f5f5f5;
+            border-radius: 25px 25px 0 0;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .new-request-btn {
+            background-color: #ff7a21;
+            color: white;
+            border: none;
+            border-radius:10px;
+            padding: 8px 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .outing-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .times {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .time-block {
+            font-size: 14px;
+        }
+
+        .time-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .time-value {
+            font-weight: normal;
+            color: #333;
+        }
+
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .description {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .status {
+            background-color: #24be37;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Gate Pass Form Styles */
+        .form-screen {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+            background-color: white;
+        }
+
+        .select-container {
+            position: relative;
+        }
+
+        .select-container::after {
+            content: "▼";
+            font-size: 12px;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #888;
+            pointer-events: none;
+        }
+
+        .date-container, .time-container {
+            position: relative;
+        }
+
+        .calendar-icon, .clock-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+
+        textarea.form-control {
+            height: 100px;
+            resize: none;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #999;
+        }
+
+        .submit-btn {
+            background-color: #24be37;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Main Profile Page Styles */
+        .profile-header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .user-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .user-email {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+        }
+
+        .user-details {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            margin-top: 20px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .detail-item {
+            flex: 1;
+        }
+
+        .detail-divider {
+            font-size: 20px;
+            margin: 0 10px;
+        }
+
+        .notification-bar {
+            background-color: #ff7a21;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .notification-text {
+            font-weight: 500;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 15px;
+            padding: 15px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .menu-item {
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .menu-item:nth-child(1) {
+            background-color: #ffded5;
+        }
+        .menu-item:nth-child(2) {
+            background-color: #fff8d5;
+        }
+        .menu-item:nth-child(3) {
+            background-color: #d5ffdb;
+        }
+        .menu-item:nth-child(4) {
+            background-color: #d5e9ff;
+        }
+        .menu-item:nth-child(5) {
+            background-color: #f9d5ff;
+        }
+        .menu-item:nth-child(6) {
+            background-color: #ffe6d5;
+        }
+        .menu-item:nth-child(7) {
+            background-color: #e1ffd5;
+        }
+        .menu-item:nth-child(8) {
+            background-color: #d5fff7;
+        }
+        .menu-item:nth-child(9) {
+            background-color: #f0f0e0;
+        }
+        .menu-item:nth-child(10) {
+            background-color: #f5d5d5;
+        }
+        .menu-item:nth-child(11) {
+            background-color: #fff5d5;
+        }
+        .menu-item:nth-child(12) {
+            background-color: #e0e0ff;
+        }
+
+        .menu-text {
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background-color: #8a1538;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .user-program {
+            text-align: right;
+            color: white;
+            margin-top: 5px;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+
+        /* Hide bottom nav on content screens */
+        .content + .bottom-nav {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!-- Main Profile Screen -->
+<div id="mainScreen">
+    <div class="profile-header">
+        <img src="1.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-name">UTKARSH SINGH</div>
+        <div class="user-email">message.utkarsh@gmail.com</div>
+
+        <div class="user-details">
+            <div class="detail-item">44731095</div>
+            <div class="detail-divider">|</div>
+            <div class="detail-item">B.E</div>
+            <div class="detail-divider">|</div>
+            <div class="user-program">
+                COMPUTER SCIENCE<br>
+                AND ENGINEERING<br>
+                WITH SPECIALIZATION<br>
+                IN ARTIFICIAL<br>
+                INTELLIGENCE
+            </div>
+        </div>
+    </div>
+
+    <div class="notification-bar">
+        <span class="notification-text">NEWS UPDATE</span>
+        <span class="notification-text">MPUS WEBSITE</span>
+        <span class="notification-text">END SEMESTER</span>
+    </div>
+
+    <div class="menu-grid">
+        <div class="menu-item">
+            <div class="menu-text">Personal Information</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Fees</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Event Calendar</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Daily Attendance</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Hourly Attendance</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">CAE Result</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">ESE Result</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">LMS</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Library</div>
+        </div>
+        <div class="menu-item" id="outingManagementBtn">
+            <div class="menu-text">Outing Management</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Exam Schedule</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-text">Hostel</div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon">⌂</div>
+            <div>Home</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🔔</div>
+            <div>Notification</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">📱</div>
+            <div>SocialMedia</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">❓</div>
+            <div>Grievance</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div>Profile</div>
+        </div>
+    </div>
+</div>
+
+<!-- Outing Details Screen -->
+<div id="outingDetailsScreen" style="display: none;">
+    <div class="navigation-bar">
+        <div class="back-button" id="outingDetailsBackBtn">&#10094;</div>
+        <div class="logo">🏫</div>
+        <div class="menu-button">☰</div>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1>Outing Details</h1>
+            <button id="newRequestBtn" class="new-request-btn">+ New Request</button>
+        </div>
+
+        <div id="outingsList">
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">25/08/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">25/08/2024 05:30 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">outing and amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">01/09/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">01/09/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">15/09/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">15/09/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">10/10/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">10/10/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">27/10/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">27/10/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">10/11/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">10/11/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+
+            <div class="outing-item">
+                <div class="times">
+                    <div class="time-block">
+                        <div class="time-label">Out Time</div>
+                        <div class="time-value">24/11/2024 08:00 AM</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time-label">In Time</div>
+                        <div class="time-value">24/11/2024 06:00 PM</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="description">amenities restock</div>
+                    <div class="status">Approved</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Apply Gate Pass Screen -->
+<div id="applyGatePassScreen" style="display: none;">
+    <div class="navigation-bar">
+        <div class="back-button" id="gatePassBackBtn">&#10094;</div>
+        <div class="logo">🏫</div>
+        <div class="menu-button">☰</div>
+    </div>
+
+    <div class="content form-screen" style="display: block;">
+        <h1>Apply Gate Pass</h1>
+
+        <div class="form-group">
+            <label class="form-label">Pass Type</label>
+            <div class="select-container">
+                <select id="passType" class="form-control">
+                    <option disabled selected>Select</option>
+                    <option>Day Pass</option>
+                    <option>Night Pass</option>
+                    <option>Weekend Pass</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Expected Out Date</label>
+            <div class="date-container">
+                <input type="text" id="outDate" class="form-control" placeholder="DD/MM/YYYY">
+                <div class="calendar-icon">📅</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Expected Out Time</label>
+            <div class="time-container">
+                <input type="text" id="outTime" class="form-control" placeholder="HH:MM">
+                <div class="clock-icon">🕒</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Expected In Date</label>
+            <div class="date-container">
+                <input type="text" id="inDate" class="form-control" placeholder="DD/MM/YYYY">
+                <div class="calendar-icon">📅</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Expected In Time</label>
+            <div class="time-container">
+                <input type="text" id="inTime" class="form-control" placeholder="HH:MM">
+                <div class="clock-icon">🕒</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Purpose</label>
+            <textarea id="purpose" class="form-control" placeholder=""></textarea>
+        </div>
+
+        <button id="submitRequestBtn" class="submit-btn">Submit Request</button>
+    </div>
+</div>
+
+<script>
+    // JavaScript for navigation between screens
+    const mainScreen = document.getElementById('mainScreen');
+    const outingDetailsScreen = document.getElementById('outingDetailsScreen');
+    const applyGatePassScreen = document.getElementById('applyGatePassScreen');
+    const outingManagementBtn = document.getElementById('outingManagementBtn');
+    const newRequestBtn = document.getElementById('newRequestBtn');
+    const outingDetailsBackBtn = document.getElementById('outingDetailsBackBtn');
+    const gatePassBackBtn = document.getElementById('gatePassBackBtn');
+    const submitRequestBtn = document.getElementById('submitRequestBtn');
+    const outingsList = document.getElementById('outingsList');
+
+    // Form fields
+    const passTypeField = document.getElementById('passType');
+    const outDateField = document.getElementById('outDate');
+    const outTimeField = document.getElementById('outTime');
+    const inDateField = document.getElementById('inDate');
+    const inTimeField = document.getElementById('inTime');
+    const purposeField = document.getElementById('purpose');
+
+    // Today's date for form defaults
+    const today = new Date();
+    const formatDate = (date) => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    // Show the main screen initially
+    mainScreen.style.display = 'block';
+    outingDetailsScreen.style.display = 'none';
+    applyGatePassScreen.style.display = 'none';
+
+    // Navigate from main screen to outing details
+    outingManagementBtn.addEventListener('click', function() {
+        mainScreen.style.display = 'none';
+        outingDetailsScreen.style.display = 'block';
+    });
+
+    // Handle new request button click
+    newRequestBtn.addEventListener('click', function() {
+        outingDetailsScreen.style.display = 'none';
+        applyGatePassScreen.style.display = 'block';
+
+        // Set default dates for convenience
+        outDateField.value = formatDate(today);
+        inDateField.value = formatDate(today);
+    });
+
+    // Handle back button click from outing details
+    outingDetailsBackBtn.addEventListener('click', function() {
+        outingDetailsScreen.style.display = 'none';
+        mainScreen.style.display = 'block';
+    });
+
+    // Handle back button click from gate pass form
+    gatePassBackBtn.addEventListener('click', function() {
+        applyGatePassScreen.style.display = 'none';
+        outingDetailsScreen.style.display = 'block';
+    });
+
+    // Handle submit request button click
+    submitRequestBtn.addEventListener('click', function() {
+        // Validate form
+        if (passTypeField.value === 'Select' || !outDateField.value || !outTimeField.value ||
+            !inDateField.value || !inTimeField.value || !purposeField.value) {
+            alert('Please fill in all fields');
+            return;
+        }
+
+        // Create new outing item
+        const newOuting = document.createElement('div');
+        newOuting.className = 'outing-item';
+        newOuting.innerHTML = `
+            <div class="times">
+                <div class="time-block">
+                    <div class="time-label">Out Time</div>
+                    <div class="time-value">${outDateField.value} ${outTimeField.value}</div>
+                </div>
+                <div class="time-block">
+                    <div class="time-label">In Time</div>
+                    <div class="time-value">${inDateField.value} ${inTimeField.value}</div>
+                </div>
+            </div>
+            <div class="details-row">
+                <div class="description">${purposeField.value}</div>
+                <div class="status">Approved</div>
+            </div>
+        `;
+
+        // Add new outing to the bottom of the list
+        outingsList.appendChild(newOuting);
+
+        // Go back to outing details
+        applyGatePassScreen.style.display = 'none';
+        outingDetailsScreen.style.display = 'block';
+
+        // Reset form
+        passTypeField.value = 'Select';
+        outDateField.value = '';
+        outTimeField.value = '';
+        inDateField.value = '';
+        inTimeField.value = '';
+        purposeField.value = '';
+
+        // Show success message
+        alert('Gate pass request submitted successfully!');
+    });
+
+    // Handle menu button click
+    const menuButtons = document.querySelectorAll('.menu-button');
+    menuButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Menu button clicked');
+        });
+    });
+
+    // Add click handlers for outing items
+    const outingItems = document.querySelectorAll('.outing-item');
+    outingItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const description = this.querySelector('.description').textContent;
+            alert('Selected outing: ' + description);
+        });
+
+        // Add click handlers to any new items added later
+        document.addEventListener('DOMNodeInserted', function(e) {
+            if (e.target.classList && e.target.classList.contains('outing-item')) {
+                e.target.addEventListener('click', function() {
+                    const description = this.querySelector('.description').textContent;
+                    alert('Selected outing: ' + description);
+                });
+            }
+        });
+    });
+
+    // Bottom navigation handlers
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const navText = this.textContent.trim();
+            if (navText.includes('Home')) {
+                // Show main screen
+                mainScreen.style.display = 'block';
+                outingDetailsScreen.style.display = 'none';
+                applyGatePassScreen.style.display = 'none';
+            } else {
+                alert(`${navText} clicked`);
+            }
+        });
+    });
+
+    // Date and time picker functionality
+    const dateInputs = document.querySelectorAll('.date-container input');
+    dateInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            // In a real implementation, this would show a date picker
+            console.log('Date picker would show here');
+        });
+    });
+
+    const timeInputs = document.querySelectorAll('.time-container input');
+    timeInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            // In a real implementation, this would show a time picker
+            console.log('Time picker would show here');
+        });
+    });
+</script>
+</body>
+</html>
